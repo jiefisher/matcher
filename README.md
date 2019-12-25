@@ -1,7 +1,9 @@
 A regex engine in Python support context free grammar. 
 
 
-This regex engine can be used in text classification, domain classification:
+This regex engine can be used in text classification, domain classification.
+
+
 You can write rule like this:
 ```
 var date =(today |tomorrow )
