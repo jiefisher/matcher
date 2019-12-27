@@ -122,7 +122,7 @@ def pos(s):
 class Object:
 	def toJSON(self):
 		return json.dumps(self, default=lambda o: o.__dict__,
-							sort_keys=True, indent=4)
+							sort_keys=True, indent=4,ensure_ascii=False)
 
 
 def match(query,nfa,li):
@@ -142,5 +142,5 @@ def match(query,nfa,li):
 						for k in li[j].post.slot:
 							k.slot_filling(query,pos_li)
 							me.semantic.slots.append(k)
-	res=me.toJSON()
+	res=str(me.toJSON()).replace('\n','').replace(" ",'')
 	return res

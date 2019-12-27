@@ -2,5 +2,6 @@ var date =(今天|明天)
 var time =(十点|十一点)
 var vehicle =(机票|高铁票)
 var weather=(天气|温度)
+var city=(上海|北京|成都)
 export weather_rule=(${b})(怎么样|如何) => domain = 气象,气候参数=$1
-export music_rule=(给我|替我)(订|买)一张(${date})(${time})的(${vehicle}) => domain = 交通,日期 = $3,时间=$4,票种=$5
+export music_rule=(给我|替我)(订|买)一张(${date})(${time})去(${city})的(${vehicle}) => domain = 交通,日期 = $3,时间=$4,终点=$5,票种=$6
