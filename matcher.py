@@ -10,7 +10,7 @@ class Slot:
 			self.value=self.value.replace("$","")
 			new_value=''
 			index=int(self.value)
-			for i in range(len(pos)):
+			for i in range(len(query)):
 				if pos[i]==index:
 					new_value+=query[i]
 		self.value=new_value
@@ -132,6 +132,8 @@ def match(query,nfa,li):
 	for key in nfa:
 		for i in range(len(nfa[key])):
 			Is_match,pos_li = nfa[key][i].match(query)
+			print(query)
+			print(pos_li)
 			if Is_match:
 				for j in range(len(li)):
 					if li[j].ID ==key:

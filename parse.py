@@ -129,11 +129,17 @@ class NFA:
         current_states = set()
         self.addstate(self.start, current_states)
         pos_li=[]
+        flag=1
+
         for c in s:
+            print(c)
             next_states = set()
+            flag=1
             for state in current_states:
                 if c in state.transitions.keys():
-                    pos_li.append(state.transitions[c].loc)
+                    if flag==1:
+                        pos_li.append(state.transitions[c].loc)
+                        flag=0
                     trans_state = state.transitions[c]
                     self.addstate(trans_state, next_states)
            

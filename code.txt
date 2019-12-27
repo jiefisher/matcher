@@ -1,6 +1,6 @@
-var date =(a|b)
-var b=${date}(c|d)
-var artist =(e|f)
-var y=(g|hh)
-export weather_rule=${b}(ia|ja) => domain = music
-export music_rule=(${artist})${date}tt(k|l)${date}=> domain = music,artist = $1,type=$2
+var date =(今天|明天)
+var time =(十点|十一点)
+var vehicle =(机票|高铁票)
+var weather=(天气|温度)
+export weather_rule=(${b})(怎么样|如何) => domain = 气象,气候参数=$1
+export music_rule=(给我|替我)(订|买)一张(${date})(${time})的(${vehicle}) => domain = 交通,日期 = $3,时间=$4,票种=$5
