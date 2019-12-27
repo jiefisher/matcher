@@ -1,28 +1,31 @@
 import pdb
 
 class Token:
-    def __init__(self, name, value):
+    def __init__(self, name, value, loc=0):
         self.name = name
         self.value = value
+        self.loc = loc
 
     def __str__(self):
         return self.name + ":" + self.value
 
 class Lexer:
-    def __init__(self, pattern):
+    def __init__(self, pattern,location):
         self.source = pattern
-        self.symbols = {'(':'LEFT_PAREN', ')':'RIGHT_PAREN', '*':'STAR', '|':'ALT', '\x08':'CONCAT', '+':'PLUS', '?':'QMARK'}
+        self.location = location
+        self.symbols = {'(':'LEFT_PAREN', ')':'RIGHT_PAREN', '[':'LEFT_PAREN', ']':'RIGHT_PAREN', '*':'STAR', '|':'ALT', '\x08':'CONCAT', '+':'PLUS', '?':'QMARK'}
         self.current = 0
         self.length = len(self.source)
        
     def get_token(self): 
         if self.current < self.length:
             c = self.source[self.current]
+            l = self.location[self.current]
             self.current += 1
             if c not in self.symbols.keys(): # CHAR
-                token = Token('CHAR', c)
+                token = Token('CHAR', c,l)
             else:
-                token = Token(self.symbols[c], c)
+                token = Token(self.symbols[c], c,l)
             return token
         else:
             return Token('NONE', '')
@@ -76,7 +79,7 @@ class Parser:
 
     def term(self):
         self.factor()
-        if self.lookahead.value not in ')|':
+        if self.lookahead.value not in ')|]':
             self.term()
             self.tokens.append(Token('CONCAT', '\x08'))
     
@@ -96,10 +99,11 @@ class Parser:
             self.consume('CHAR')
 
 class State:
-    def __init__(self, name):
+    def __init__(self, name,loc=0):
         self.epsilon = [] # epsilon-closure
         self.transitions = {} # char : state
         self.name = name
+        self.loc = loc
         self.is_end = False
     
 class NFA:
@@ -124,11 +128,12 @@ class NFA:
     def match(self,s):
         current_states = set()
         self.addstate(self.start, current_states)
-        
+        pos_li=[]
         for c in s:
             next_states = set()
             for state in current_states:
                 if c in state.transitions.keys():
+                    pos_li.append(state.transitions[c].loc)
                     trans_state = state.transitions[c]
                     self.addstate(trans_state, next_states)
            
@@ -136,8 +141,8 @@ class NFA:
 
         for s in current_states:
             if s.is_end:
-                return True
-        return False
+                return True,pos_li
+        return False,[]
 
 class Handler:
     def __init__(self):
@@ -154,6 +159,7 @@ class Handler:
         s0 = self.create_state()
         s1 = self.create_state()
         s0.transitions[t.value] = s1
+        s1.loc = t.loc
         nfa = NFA(s0, s1)
         nfa_stack.append(nfa)
     

@@ -1,5 +1,5 @@
 import matcher
-rules = matcher.build()
-query= "hakb"
-results = matcher.match(query,rules)
+rules,li = matcher.build()
+query= "eattkb"
+results = matcher.match(query,rules,li)
 print(results)

@@ -1,12 +1,12 @@
 from parse import Lexer, Parser, Token, State, NFA, Handler
 
-def compile(p, debug = False):
+def compile(p,location, debug = False):
     
     def print_tokens(tokens):
         for t in tokens:
-            print(t)
+            print(t.name,t.value,t.loc)
 
-    lexer = Lexer(p)
+    lexer = Lexer(p,location)
     parser = Parser(lexer)
     tokens = parser.parse()
 

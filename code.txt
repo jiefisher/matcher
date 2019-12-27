@@ -1,6 +1,6 @@
 var date =(a|b)
 var b=${date}(c|d)
 var artist =(e|f)
-var y=(g|h)
-export weather_rule=${b}(i|j) => weather
-export music_rule=(${y})${date}(k|l)${date} => music
+var y=(g|hh)
+export weather_rule=${b}(ia|ja) => domain = music
+export music_rule=(${artist})${date}tt(k|l)${date}=> domain = music,artist = $1,type=$2
