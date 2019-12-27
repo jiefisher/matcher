@@ -1,6 +1,6 @@
-var date =(today |tomorrow )
-var b=${date}(weather |temp )
-var artist =(tom |tony )
-var y=${artist}(song |music )
-export weather_rule=${b}(is ok|not ok) => weather
-export music_rule=${y}(good|bad) => music
+var date =(a|b)
+var b=${date}(c|d)
+var artist =(e|f)
+var y=(g|h)
+export weather_rule=${b}(i|j) => weather
+export music_rule=(${y})${date}(k|l)${date} => music
